@@ -7,7 +7,13 @@ dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 load_dotenv()
 
+
+from routers import users, transactions
+
 app = FastAPI()
+
+app.include_router(users.router)
+app.include_router(transactions.router)
 
 @app.get('/')
 def hello():
@@ -21,3 +27,8 @@ conn = psycopg2.connect(
     password=os.environ.get("PSQL_PASSWORD"),
     port=os.environ.get("PSQL_PORT"),
 )
+
+cursor = conn.cursor()
+
+
+
